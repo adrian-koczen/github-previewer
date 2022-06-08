@@ -31,7 +31,13 @@ const Search = () => {
       <div className={styles.searchOptions}>
         <form onSubmit={formik.handleSubmit}>
           <fieldset>
-            <div className={styles.radioElement}>
+            <div
+              className={
+                formik.values.input === SearchOption.username
+                  ? `${styles.radioElement} ${styles.active}`
+                  : `${styles.radioElement}`
+              }
+            >
               <input
                 type="radio"
                 id={SearchOption.username}
@@ -42,7 +48,13 @@ const Search = () => {
               />
               <label htmlFor={SearchOption.username}>username</label>
             </div>
-            <div className={styles.radioElement}>
+            <div
+              className={
+                formik.values.input === SearchOption.repository
+                  ? `${styles.radioElement} ${styles.active}`
+                  : `${styles.radioElement}`
+              }
+            >
               <input
                 type="radio"
                 id={SearchOption.repository}

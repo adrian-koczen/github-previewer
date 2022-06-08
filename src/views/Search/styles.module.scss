@@ -6,6 +6,34 @@
   flex-direction: row;
 }
 
-fieldset {
-  border: none;
+form {
+  fieldset {
+    border: none;
+
+    .radioElement {
+      border: 1px solid $gray;
+      border-radius: 5px;
+      margin: 8px 0;
+      padding: 10px 0px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      position: relative;
+
+      input {
+        width: 100%;
+        opacity: 0;
+      }
+
+      label {
+        position: absolute;
+        margin-left: 16px;
+      }
+
+      &.active {
+        background-color: #163b4d;
+      }
+    }
+  }
 }

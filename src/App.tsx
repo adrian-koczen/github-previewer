@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "styles/index.module.scss";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 // Views
 import Header from "views/Header/Header";
 import Search from "views/Search/Search";

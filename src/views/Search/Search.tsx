@@ -5,7 +5,7 @@ import styles from "./styles.module.scss";
 import Button from "components/Button/Button";
 import Box from "components/Box/Box";
 // Interfaces
-import { SearchOption } from "interfaces";
+import { SearchOption, ButtonVariant } from "interfaces";
 
 interface FormValues {
   searchTerm: string;
@@ -66,14 +66,18 @@ const Search = () => {
               <label htmlFor={SearchOption.repository}>repository</label>
             </div>
           </fieldset>
-          <label htmlFor="searchTerm">
-            Input{" "}
-            {formik.values.input === SearchOption.username
-              ? "username"
-              : "repository"}
-          </label>
-          <input type="text" id="searchTerm" onChange={formik.handleChange} />
-          <Button type="submit">Wyszukaj</Button>
+          <div className={styles.inputTermContainer}>
+            <label htmlFor="searchTerm">
+              Input
+              {formik.values.input === SearchOption.username
+                ? " username"
+                : " repository"}
+            </label>
+            <input type="text" id="searchTerm" onChange={formik.handleChange} />
+            <Button type="submit" variant={ButtonVariant.primary}>
+              Wyszukaj
+            </Button>
+          </div>
         </form>
       </div>
     </Box>

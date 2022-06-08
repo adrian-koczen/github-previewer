@@ -4,24 +4,27 @@
   padding: 10px 20px;
   cursor: pointer;
   border: none;
-  background-color: Transparent;
   color: #ffffff;
   font-weight: 600;
   font-size: 14px;
   border-radius: 5px;
   margin-right: 8px;
+  margin: 8px 0;
 
   &:hover {
-    color: $darkBlue;
+    color: $gray;
     background-color: #cecece;
   }
 
   &:last-child {
     margin-right: 0px;
   }
-}
 
-.isActive {
-  color: $darkBlue;
-  background-color: #cecece;
+  &.primary {
+    background-color: $lightBlue;
+  }
+
+  &.secondary {
+    background-color: $lightBlack;
+  }
 }

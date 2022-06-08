@@ -1,0 +1,11 @@
+@import "../../styles/variables";
+
+.searchOptions {
+  margin: 8px 0;
+  display: flex;
+  flex-direction: row;
+}
+
+fieldset {
+  border: none;
+}

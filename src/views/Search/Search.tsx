@@ -1,29 +1,64 @@
 import React from "react";
 import { useFormik } from "formik";
+import * as Yup from "yup";
 import styles from "./styles.module.scss";
 // Components
 import Button from "components/Button/Button";
 import Box from "components/Box/Box";
 // Interfaces
 import { SearchOption, ButtonVariant } from "interfaces";
+// Router
+import { useNavigate } from "react-router-dom";
 
 interface FormValues {
-  searchTerm: string;
+  username: string;
+  repository: string;
   input: SearchOption;
 }
 
 const initialFormValues: FormValues = {
-  searchTerm: "",
+  username: "",
+  repository: "",
   input: SearchOption.username,
 };
 
+const formValidationSchema = Yup.object().shape({
+  username: Yup.string().when("input", {
+    is: SearchOption.username,
+    then: Yup.string().min(3, "Minimal string length is 3").required(),
+  }),
+  repository: Yup.string().when("input", {
+    is: SearchOption.repository,
+    then: Yup.string().min(3, "Minimal string length is 3").required(),
+  }),
+});
+
 const Search = () => {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: initialFormValues,
+    validationSchema: formValidationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      searchSwitch(values);
     },
   });
+
+  const searchSwitch = (values: FormValues) => {
+    switch (values.input) {
+      case SearchOption.username:
+        return searchUsername(values);
+      case SearchOption.repository:
+        return searchRepositories(values);
+    }
+  };
+
+  const searchUsername = (values: FormValues) => {
+    navigate(`/username/${values.username}`);
+  };
+
+  const searchRepositories = (values: FormValues) => {
+    navigate(`/repositories/${values.repository}`);
+  };
 
   return (
     <Box>
@@ -63,19 +98,32 @@ const Search = () => {
                   formik.setFieldValue("input", SearchOption.repository)
                 }
               />
-              <label htmlFor={SearchOption.repository}>repository</label>
+              <label htmlFor={SearchOption.repository}>repository name</label>
             </div>
           </fieldset>
           <div className={styles.inputTermContainer}>
-            <label htmlFor="searchTerm">
-              Input
-              {formik.values.input === SearchOption.username
-                ? " username"
-                : " repository"}
-            </label>
-            <input type="text" id="searchTerm" onChange={formik.handleChange} />
+            {formik.values.input === SearchOption.username && (
+              <>
+                <label htmlFor="username">Input username</label>
+                <input
+                  type="text"
+                  id="username"
+                  onChange={formik.handleChange}
+                />
+              </>
+            )}
+            {formik.values.input === SearchOption.repository && (
+              <>
+                <label htmlFor="repository">Input repository name</label>
+                <input
+                  type="text"
+                  id="repository"
+                  onChange={formik.handleChange}
+                />
+              </>
+            )}
             <Button type="submit" variant={ButtonVariant.primary}>
-              Wyszukaj
+              Search
             </Button>
           </div>
         </form>

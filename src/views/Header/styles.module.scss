@@ -1,3 +1,5 @@
+@import "../../styles/variables";
+
 header {
   width: 100%;
   height: 60px;
@@ -8,13 +10,6 @@ header {
   flex-wrap: nowrap;
   margin-bottom: 16px;
   min-width: 320px;
-
-  .infoIcon {
-    min-width: 24px;
-    min-height: 24px;
-    width: 24px;
-    height: 24px;
-  }
 }
 
 .headerWrapper {
@@ -24,6 +19,42 @@ header {
   align-items: center;
   flex-wrap: nowrap;
   padding: 0 16px;
+
+  .headerButtons {
+    display: inline-flex;
+    align-items: center;
+
+    .link {
+      color: white;
+      text-decoration: none;
+      margin: 0 8px;
+      padding: 10px;
+      -webkit-tap-highlight-color: transparent;
+
+      @media only screen and (min-width: 600px) {
+        &:hover {
+          background-color: $gray;
+          border-radius: 5px;
+        }
+      }
+    }
+
+    .infoIcon {
+      min-width: 24px;
+      min-height: 24px;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+
+      @media only screen and (min-width: 600px) {
+        &:hover {
+          color: $gray;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
 }
 
 .headerLogo {

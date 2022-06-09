@@ -1,6 +1,6 @@
 export enum SearchOption {
-  username = "username",
-  repository = "repository",
+  username = "radioUsername",
+  repository = "radioRepository",
 }
 
 export enum ButtonVariant {

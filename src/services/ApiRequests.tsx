@@ -1,7 +1,7 @@
 import { httpClient } from "clients/httpClient";
 
 export const checkApiLimit = async () => {
-  const res = await httpClient.get("/users/adrian-koczen");
+  const res = await httpClient.get("/users/react");
   const {
     "x-ratelimit-limit": rateLimit,
     "x-ratelimit-remaining": rateLimitRemain,
@@ -19,4 +19,35 @@ export const checkApiLimit = async () => {
     .toString();
   result = { ...result, rateLimitReset: limitResetDate };
   return result;
+};
+
+export const getGithubUserProfile = async (username: string) => {
+  const res = await httpClient.get(`/users/${username}`);
+  const { login, name, email, id, avatar_url, repos_url } = res.data;
+  const result = { login, name, email, id, avatar_url, repos_url };
+  return result;
+};
+
+export const getGithubUserRepositories = async (username: string) => {
+  const res = await httpClient.get(`/users/${username}/repos`);
+  const result = res.data.map((el: any) => {
+    return {
+      id: el.id,
+      name: el.name,
+      url: el.url,
+      commitsUrl: el.commits_url,
+    };
+  });
+  return result;
+};
+
+export const getRepositoriesByName = async (name: string, page?: number) => {
+  if (page) {
+    const res = await httpClient.get(
+      `/search/repositories?q=${name}&page=${page}`
+    );
+    return res.data.items;
+  }
+  const res = await httpClient.get(`/search/repositories?q=${name}`);
+  return res.data.items;
 };

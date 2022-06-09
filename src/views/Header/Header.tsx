@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./styles.module.scss";
+import { Link } from "react-router-dom";
 // Icons
 import { ReactComponent as Info } from "icons/info.svg";
 // Components
@@ -25,10 +26,15 @@ const Header = () => {
         <div className={styles.headerLogo}>
           <span>Github previewer</span>
         </div>
-        <Info
-          className={styles.infoIcon}
-          onClick={() => setGithubInfoModal(true)}
-        />
+        <div className={styles.headerButtons}>
+          <Link className={styles.link} to="/search">
+            Search
+          </Link>
+          <Info
+            className={styles.infoIcon}
+            onClick={() => setGithubInfoModal(true)}
+          />
+        </div>
       </div>
     </header>
   );

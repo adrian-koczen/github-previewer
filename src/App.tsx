@@ -4,6 +4,9 @@ import { Routes, Route } from "react-router-dom";
 // Views
 import Header from "views/Header/Header";
 import Search from "views/Search/Search";
+import UserProfile from "views/UserProfile/UserProfile";
+import NotFound from "views/NotFound/NotFound";
+import Repositories from "views/Repositories/Repositories";
 
 function App() {
   return (
@@ -13,6 +16,9 @@ function App() {
         <Routes>
           <Route index element={<Search />} />
           <Route path="search" element={<Search />} />
+          <Route path="username/:username" element={<UserProfile />} />
+          <Route path="repositories/:repository" element={<Repositories />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </div>

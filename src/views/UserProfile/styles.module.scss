@@ -1,0 +1,40 @@
+.profileHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 16px;
+
+  .avatar {
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+  }
+
+  .profileInfo {
+    margin-left: 24px;
+  }
+}
+
+.repositoriesContainer {
+  display: flex;
+  flex-direction: column;
+
+  .repositoryContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 8px 0;
+
+    .repositoryName {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        width: 16px;
+        height: 16px;
+        color: #ffffff;
+        margin-right: 16px;
+      }
+    }
+  }
+}

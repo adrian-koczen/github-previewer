@@ -3,6 +3,8 @@ import styles from "./styles.module.scss";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 // Components
 import Box from "components/Box/Box";
+import Pagination from "components/Pagination/Pagination";
+import RepositoriesListElement from "components/RepositoriesListElement/RepositoriesListElement";
 // Services
 import { getRepositoriesByName } from "services/ApiRequests";
 // Hooks
@@ -12,14 +14,13 @@ const Repositories = () => {
   const [repositories, setRepositories] = useState<[]>([]);
   const [loading, setLoading] = useState<Boolean>(true);
   const [page, setPage] = useState<number>(1);
+  const [paginationList, updatePaginationList] = usePagination(page);
 
   // Router
   const { pathname } = useLocation();
   const params = useParams();
   const navigate = useNavigate();
-
   const repository = pathname.split("/")[2];
-  const [pagination, updatePagination] = usePagination(page);
 
   const changePage = (page: number) => {
     const url = pathname.split("/");
@@ -40,7 +41,7 @@ const Repositories = () => {
       setPage(page);
     }
     updateRepositories(repository, page);
-    updatePagination(page);
+    updatePaginationList(page);
   };
 
   const updateRepositories = async (name: string, page: number) => {
@@ -58,37 +59,28 @@ const Repositories = () => {
     getPage();
   }, [params]);
 
+  if (loading) {
+    return (
+      <Box>
+        <div>Loading</div>
+      </Box>
+    );
+  }
+
   return (
     <Box>
-      {loading && <div>Loading</div>}
-      {!loading && (
+      <div>
+        <h3>Repositories</h3>
         <div>
-          <h3>Repositories</h3>
-          <div>
-            {repositories && repositories.length > 0 ? (
-              repositories.map((repo: any) => {
-                return <div key={repo.id}>{repo.name}</div>;
-              })
-            ) : (
-              <div>No more results</div>
-            )}
-          </div>
+          {repositories && repositories.length > 0 ? (
+            <RepositoriesListElement repositories={repositories} />
+          ) : (
+            <div>No more results</div>
+          )}
         </div>
-      )}
-      {!loading && repositories.length > 0 && (
-        <div className={styles.paginationContainer}>
-          {pagination.map((paginationPage: number, i: number) => {
-            return (
-              <div
-                key={i}
-                className={styles.paginationPage}
-                onClick={() => changePage(paginationPage)}
-              >
-                {paginationPage}
-              </div>
-            );
-          })}
-        </div>
+      </div>
+      {repositories.length > 0 && (
+        <Pagination paginationList={paginationList} changePage={changePage} />
       )}
     </Box>
   );

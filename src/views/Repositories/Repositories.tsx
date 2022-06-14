@@ -8,13 +8,11 @@ import RepositoriesListElement from "components/RepositoriesListElement/Reposito
 // Services
 import { getRepositoriesByName } from "services/ApiRequests";
 // Hooks
-import usePagination from "hooks/usePagination";
 
 const Repositories = () => {
   const [repositories, setRepositories] = useState<[]>([]);
   const [loading, setLoading] = useState<Boolean>(true);
   const [page, setPage] = useState<number>(1);
-  const [paginationList, updatePaginationList] = usePagination(page);
 
   // Router
   const { pathname } = useLocation();
@@ -41,7 +39,6 @@ const Repositories = () => {
       setPage(page);
     }
     updateRepositories(repository, page);
-    updatePaginationList(page);
   };
 
   const updateRepositories = async (name: string, page: number) => {
@@ -77,9 +74,9 @@ const Repositories = () => {
           <div>No more results</div>
         )}
       </div>
-      {repositories.length > 0 && (
+      {/* {repositories.length > 0 && (
         <Pagination paginationList={paginationList} changePage={changePage} />
-      )}
+      )} */}
     </Box>
   );
 };

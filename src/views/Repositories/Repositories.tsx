@@ -1,24 +1,35 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 // Components
 import Box from "components/Box/Box";
 // Services
 import { getRepositoriesByName } from "services/ApiRequests";
+// Hooks
 import usePagination from "hooks/usePagination";
 
 const Repositories = () => {
   const [repositories, setRepositories] = useState<[]>([]);
   const [loading, setLoading] = useState<Boolean>(true);
   const [page, setPage] = useState<number>(1);
-  const { search, pathname } = useLocation();
+
+  // Router
+  const { pathname } = useLocation();
+  const params = useParams();
+  const navigate = useNavigate();
+
   const repository = pathname.split("/")[2];
   const [pagination, updatePagination] = usePagination(page);
 
+  const changePage = (page: number) => {
+    const url = pathname.split("/");
+    const newUrl = `${url[1]}/${url[2]}/${page}`;
+    navigate(`/${newUrl}`);
+  };
+
   const getPage = () => {
     setLoading(true);
-    const searchParams = new URLSearchParams(search);
-    const page = Number(searchParams.get("page"));
+    const page = Number(params.page);
     updatePage(page);
   };
 
@@ -38,14 +49,14 @@ const Repositories = () => {
       setRepositories(repositories);
       setLoading(false);
     } catch (error: any) {
-      console.log(error.message);
+      setRepositories([]);
       setLoading(false);
     }
   };
 
   useEffect(() => {
     getPage();
-  }, []);
+  }, [params]);
 
   return (
     <Box>
@@ -64,7 +75,21 @@ const Repositories = () => {
           </div>
         </div>
       )}
-      <div className={styles.paginationContainer}>PAGINATION</div>
+      {!loading && repositories.length > 0 && (
+        <div className={styles.paginationContainer}>
+          {pagination.map((paginationPage: number, i: number) => {
+            return (
+              <div
+                key={i}
+                className={styles.paginationPage}
+                onClick={() => changePage(paginationPage)}
+              >
+                {paginationPage}
+              </div>
+            );
+          })}
+        </div>
+      )}
     </Box>
   );
 };

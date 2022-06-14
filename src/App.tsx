@@ -17,7 +17,10 @@ function App() {
           <Route index element={<Search />} />
           <Route path="search" element={<Search />} />
           <Route path="username/:username" element={<UserProfile />} />
-          <Route path="repositories/:repository" element={<Repositories />} />
+          <Route
+            path="repositories/:repository/:page"
+            element={<Repositories />}
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

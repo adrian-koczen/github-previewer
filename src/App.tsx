@@ -7,6 +7,7 @@ import Search from "views/Search/Search";
 import UserProfile from "views/UserProfile/UserProfile";
 import NotFound from "views/NotFound/NotFound";
 import Repositories from "views/Repositories/Repositories";
+import Repository from "views/Repository/Repository";
 
 function App() {
   return (
@@ -17,6 +18,10 @@ function App() {
           <Route index element={<Search />} />
           <Route path="search" element={<Search />} />
           <Route path="username/:username" element={<UserProfile />} />
+          <Route
+            path="repository/:username/:repository"
+            element={<Repository />}
+          />
           <Route path="repositories/:repository" element={<Repositories />} />
           <Route
             path="repositories/:repository/:page"

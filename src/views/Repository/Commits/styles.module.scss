@@ -1,0 +1,44 @@
+@import "../../../styles/variables";
+
+.container {
+  .head {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .commitAuthorContainer {
+    display: flex;
+    flex-direction: row;
+    min-width: 116px;
+    width: 116px;
+    gap: 8px;
+
+    .name {
+      min-width: 50px;
+      width: 50px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .date {
+      min-width: 50px;
+    }
+  }
+
+  .commitContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin: 16px 0;
+    gap: 16px;
+
+    .message {
+      flex-grow: 2;
+      word-break: break-all;
+      border-bottom: 1px solid $gray;
+      padding-bottom: 8px;
+    }
+  }
+}

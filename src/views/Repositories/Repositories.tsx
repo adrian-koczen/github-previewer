@@ -69,15 +69,13 @@ const Repositories = () => {
 
   return (
     <Box>
-      <div>
+      <div className={styles.container}>
         <h3>Repositories</h3>
-        <div>
-          {repositories && repositories.length > 0 ? (
-            <RepositoriesListElement repositories={repositories} />
-          ) : (
-            <div>No more results</div>
-          )}
-        </div>
+        {repositories && repositories.length > 0 ? (
+          <RepositoriesListElement repositories={repositories} />
+        ) : (
+          <div>No more results</div>
+        )}
       </div>
       {repositories.length > 0 && (
         <Pagination paginationList={paginationList} changePage={changePage} />

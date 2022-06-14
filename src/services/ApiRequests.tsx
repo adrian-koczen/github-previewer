@@ -51,3 +51,13 @@ export const getRepositoriesByName = async (name: string, page?: number) => {
   const res = await httpClient.get(`/search/repositories?q=${name}`);
   return res.data.items;
 };
+
+export const getRepository = async (username: string, repository: string) => {
+  const res = await httpClient.get(`/repos/${username}/${repository}`);
+  return res.data;
+};
+
+export const getCommits = async (username: string, repository: string) => {
+  const res = await httpClient.get(`/repos/${username}/${repository}/commits`);
+  return res.data;
+};

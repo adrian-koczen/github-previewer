@@ -20,19 +20,30 @@ const Commits = () => {
   const updateCommits = async () => {
     const username = pathname.split("/")[2];
     const repository = pathname.split("/")[3];
-    const data = await getCommits(username, repository);
-    setCommits(data);
+    try {
+      const data = await getCommits(username, repository);
+      setCommits(data);
+    } catch (error) {
+      setCommits([]);
+    }
   };
 
   useEffect(() => {
     updateCommits();
   }, []);
 
+  if (commits?.length === 0) {
+    return <div>No commits</div>;
+  }
+
   return (
     <div className={styles.container}>
+      <h3>Commits</h3>
       <div className={styles.head}>
-        <span className={styles.author}>Author</span>
-        <span className={styles.date}>Date</span>
+        <div className={styles.headLeft}>
+          <span className={styles.author}>Author</span>
+          <span className={styles.date}>Date</span>
+        </div>
         <span>Message</span>
       </div>
       <div className={styles.body}>

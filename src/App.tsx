@@ -8,6 +8,7 @@ import UserProfile from "views/UserProfile/UserProfile";
 import NotFound from "views/NotFound/NotFound";
 import Repositories from "views/Repositories/Repositories";
 import Repository from "views/Repository/Repository";
+import Footer from "views/Footer/Footer";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Footer />
       </div>
     </div>
   );

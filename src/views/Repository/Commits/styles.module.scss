@@ -4,7 +4,15 @@
   .head {
     display: flex;
     flex-direction: row;
+
     gap: 16px;
+
+    .headLeft {
+      display: flex;
+      gap: 8px;
+      min-width: 116px;
+      width: 116px;
+    }
   }
 
   .commitAuthorContainer {
@@ -35,7 +43,6 @@
     gap: 16px;
 
     .message {
-      flex-grow: 2;
       word-break: break-all;
       border-bottom: 1px solid $gray;
       padding-bottom: 8px;

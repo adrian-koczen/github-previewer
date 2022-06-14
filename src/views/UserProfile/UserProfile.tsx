@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 // Icons
 import { ReactComponent as RepositoryIcon } from "icons/repository.svg";
 // Components
@@ -24,6 +24,7 @@ interface Repositories {
   id: number;
   name: string;
   commitsUrl: string;
+  full_name: string;
 }
 
 interface ProfileCart {
@@ -52,8 +53,13 @@ const UserRepositories = ({ data }: UserRepositories) => {
         return (
           <div key={repo.id} className={styles.repositoryContainer}>
             <div className={styles.repositoryName}>
-              <RepositoryIcon className={styles.icon} />
-              <span>{repo.name}</span>
+              <Link
+                to={`/repository/${repo.full_name}`}
+                className={styles.link}
+              >
+                <RepositoryIcon className={styles.icon} />
+                <span>{repo.name}</span>
+              </Link>
             </div>
           </div>
         );

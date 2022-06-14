@@ -36,6 +36,7 @@ export const getGithubUserRepositories = async (username: string) => {
       name: el.name,
       url: el.url,
       commitsUrl: el.commits_url,
+      full_name: el.full_name,
     };
   });
   return result;

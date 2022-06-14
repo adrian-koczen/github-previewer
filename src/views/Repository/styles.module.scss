@@ -1,14 +1,10 @@
-.name {
+.nameContainer {
   display: flex;
   flex-direction: column;
-}
 
-.dateRow {
-}
-
-td {
-  padding: 10px 5px;
-}
-
-tr {
+  .name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

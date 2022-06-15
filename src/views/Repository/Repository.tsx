@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
 // Components
 import Box from "components/Box/Box";
@@ -30,16 +30,30 @@ interface Repository {
 const Repository = () => {
   const [repository, setRepository] = useState<Repository>();
   const [activeTab, setActiveTab] = useState(initialActiveTabsState);
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
+  const navigate = useNavigate();
+
+  const handleQuery = () => {
+    const values = new URLSearchParams(search);
+    const view = values.get("view");
+    switch (view) {
+      case Tabs.Commits:
+        return handleActiveTab(Tabs.Commits);
+      case Tabs.Contributors:
+        return handleActiveTab(Tabs.Contributors);
+    }
+  };
 
   const handleActiveTab = (tabname: Tabs) => {
     switch (tabname) {
       case Tabs.Commits:
+        navigate(`${pathname}?view=Commits`);
         return setActiveTab({
           ...initialActiveTabsState,
           commits: !activeTab.commits,
         });
       case Tabs.Contributors:
+        navigate(`${pathname}?view=Contributors`);
         return setActiveTab({
           ...initialActiveTabsState,
           contributors: !activeTab.contributors,
@@ -56,6 +70,7 @@ const Repository = () => {
 
   useEffect(() => {
     updateRepository();
+    handleQuery();
   }, []);
 
   return (

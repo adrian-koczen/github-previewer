@@ -57,7 +57,7 @@ const Search = () => {
   };
 
   const searchRepositories = (values: FormValues) => {
-    navigate(`/repositories/${values.repository}`);
+    navigate(`/repositories/${values.repository}?page=0`);
   };
 
   return (

@@ -7,7 +7,7 @@
 
   .paginationPage {
     margin: 0 5px;
-    border-radius: 50%;
+    border-radius: 5px;
     background-color: $gray;
     width: 30px;
     height: 30px;
@@ -15,5 +15,25 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+
+    &:nth-child(2) {
+      background-color: $lightBlue;
+    }
+  }
+
+  .paginationPageZero {
+    margin: 0 5px;
+    border-radius: 5px;
+    background-color: $gray;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &:nth-child(1) {
+      background-color: $lightBlue;
+    }
   }
 }

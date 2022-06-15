@@ -1,5 +1,13 @@
 import { httpClient } from "clients/httpClient";
 
+interface SearchQuery {
+  name: string | undefined;
+  page?: string;
+  per_page?: string;
+  sort?: string;
+  order?: string;
+}
+
 export const checkApiLimit = async () => {
   const res = await httpClient.get("/users/react");
   const {
@@ -42,15 +50,19 @@ export const getGithubUserRepositories = async (username: string) => {
   return result;
 };
 
-export const getRepositoriesByName = async (name: string, page?: number) => {
-  if (page) {
-    const res = await httpClient.get(
-      `/search/repositories?q=${name}&page=${page}`
-    );
-    return res.data.items;
-  }
-  const res = await httpClient.get(`/search/repositories?q=${name}`);
-  return res.data.items;
+export const getRepositoriesByName = async (queries: SearchQuery) => {
+  const searchQueries = {
+    name: queries.name,
+    page: queries.page,
+    sort: queries.sort || "followers",
+    order: queries.order || "desc",
+    per_page: queries.per_page || "30",
+  };
+  const { name, page, sort, order, per_page } = searchQueries;
+  const res = await httpClient.get(
+    `/search/repositories?q=${name}&page=${page}&sort=${sort}&order=${order}&per_page=${per_page}`
+  );
+  return res.data;
 };
 
 export const getRepository = async (username: string, repository: string) => {

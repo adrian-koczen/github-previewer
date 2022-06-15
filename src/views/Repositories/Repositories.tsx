@@ -8,53 +8,54 @@ import RepositoriesListElement from "components/RepositoriesListElement/Reposito
 // Services
 import { getRepositoriesByName } from "services/ApiRequests";
 // Hooks
+import usePagination from "hooks/usePagination";
+
+interface SearchQuery {
+  name: string | undefined;
+  page?: string;
+  per_page?: string;
+  sort?: string;
+  order?: string;
+}
 
 const Repositories = () => {
   const [repositories, setRepositories] = useState<[]>([]);
   const [loading, setLoading] = useState<Boolean>(true);
-  const [page, setPage] = useState<number>(1);
 
   // Router
-  const { pathname } = useLocation();
   const params = useParams();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
-  const repository = pathname.split("/")[2];
+
+  // Hooks
+  const [paginationLoading, queryValues, currentPage] = usePagination();
 
   const changePage = (page: number) => {
-    const url = pathname.split("/");
-    const newUrl = `${url[1]}/${url[2]}/${page}`;
-    navigate(`/${newUrl}`);
+    navigate({
+      pathname: pathname,
+      search: `?page=${page}&order=desc&sort=followers&per_page=30`,
+    });
   };
 
-  const getPage = () => {
-    setLoading(true);
-    const page = Number(params.page);
-    updatePage(page);
-  };
-
-  const updatePage = (page: number) => {
-    if (page < 0) {
-      setPage(page * -1);
-    } else {
-      setPage(page);
-    }
-    updateRepositories(repository, page);
-  };
-
-  const updateRepositories = async (name: string, page: number) => {
+  const updateRepositories = async (queries: SearchQuery) => {
     try {
-      const repositories = await getRepositoriesByName(name, page);
-      setRepositories(repositories);
+      const repositories = await getRepositoriesByName(queries);
+      setRepositories(repositories.items);
       setLoading(false);
-    } catch (error: any) {
+    } catch (error) {
       setRepositories([]);
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    getPage();
-  }, [params]);
+    setLoading(true);
+    if (!paginationLoading) {
+      const repositoryName = params.repository;
+      const queries = { ...queryValues, name: repositoryName };
+      updateRepositories(queries);
+    }
+  }, [paginationLoading, queryValues]);
 
   if (loading) {
     return (
@@ -74,9 +75,9 @@ const Repositories = () => {
           <div>No more results</div>
         )}
       </div>
-      {/* {repositories.length > 0 && (
-        <Pagination paginationList={paginationList} changePage={changePage} />
-      )} */}
+      {repositories.length > 0 && currentPage && (
+        <Pagination currentPage={currentPage} changePage={changePage} />
+      )}
     </Box>
   );
 };

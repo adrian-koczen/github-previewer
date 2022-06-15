@@ -24,10 +24,6 @@ function App() {
             element={<Repository />}
           />
           <Route path="repositories/:repository" element={<Repositories />} />
-          <Route
-            path="repositories/:repository/:page"
-            element={<Repositories />}
-          />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

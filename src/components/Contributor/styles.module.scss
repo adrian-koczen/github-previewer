@@ -1,0 +1,12 @@
+@import "../../styles//variables";
+
+.container {
+  width: 40%;
+  border: 1px solid $gray;
+  padding: 8px;
+  border-radius: 5px;
+
+  .avatar {
+    width: 100%;
+  }
+}

@@ -8,6 +8,7 @@ import RadioButton from "components/RadioButton/RadioButton";
 import Commits from "./Commits/Commits";
 // Services
 import { getRepository } from "services/ApiRequests";
+import Contributors from "./Contributors/Contributors";
 
 const initialActiveTabsState = {
   commits: false,
@@ -84,6 +85,7 @@ const Repository = () => {
         <RadioButton active={activeTab.contributors}>Contributors</RadioButton>
       </div>
       {activeTab.commits && <Commits />}
+      {activeTab.contributors && <Contributors />}
     </Box>
   );
 };

@@ -74,3 +74,13 @@ export const getCommits = async (username: string, repository: string) => {
   const res = await httpClient.get(`/repos/${username}/${repository}/commits`);
   return res.data;
 };
+
+export const getContributors = async (username: string, repository: string) => {
+  const res = await httpClient.get(
+    `/repos/${username}/${repository}/contributors`
+  );
+  const data = res.data.map((el: any) => {
+    return { login: el.login, id: el.id, avatar: el.avatar_url };
+  });
+  return data;
+};
